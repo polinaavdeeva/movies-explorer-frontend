@@ -1,0 +1,141 @@
+.register {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 70px;
+  margin-bottom: 70px;
+}
+
+.register__page {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  max-width: 396px;
+  width: 100%;
+}
+
+.register__logo {
+  width: 38px;
+  height: 38px;
+}
+
+.register__form {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  row-gap: 20px;
+}
+
+.register__title {
+  width: 100%;
+  text-align: left;
+  margin-top: 40px;
+  margin-bottom: 40px;
+  font-size: 24px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
+}
+
+.register__label {
+  display: flex;
+  flex-direction: column;
+  row-gap: 10px;
+  color: #a0a0a0;
+  font-size: 10px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+}
+
+.register__input {
+  border-radius: 8px;
+  background: #f9f9f9;
+  width: 100%;
+  height: 46px;
+  font-size: 13px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+  display: flex;
+  align-items: center;
+  padding-left: 15px;
+  outline: none;
+  border: none;
+  box-sizing: border-box;
+}
+
+.register__button {
+  margin-top: 69px;
+  border-radius: 3px;
+  background: black;
+  color: white;
+  font-size: 14px;
+  font-family: Inter;
+  font-style: normal;
+  font-weight: 500;
+  border: none;
+  height: 45px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+}
+
+.register__text {
+  max-width: 396px;
+  width: 100%;
+  color: #a0a0a0;
+  margin-top: 16px;
+  margin-bottom: 0;
+  font-size: 14px;
+  font-family: Inter;
+  font-style: normal;
+  font-weight: 400;
+  display: flex;
+  justify-content: center;
+}
+
+.register__link {
+  color: black;
+  font-size: 14px;
+  font-family: Inter;
+  font-style: normal;
+  font-weight: 400;
+  text-decoration: none;
+}
+
+@media screen and (max-width: 768px) {
+  .register {
+    margin-top: 232px;
+    margin-bottom: 232px;
+  }
+}
+
+
+@media screen and (max-width: 320px) {
+  .register {
+    margin-top: 56px;
+    margin-bottom: 30px;
+  }
+
+  .register__page {
+    max-width: 260px;
+    align-items: center;
+  }
+
+  .register__title {
+    margin-top: 50px;
+    margin-bottom: 80px;
+    text-align: center;
+  }
+
+  .register__button {
+    margin-top: 157px;
+  }
+
+  .register__text {
+    margin-top: 14px;
+    font-size: 12px;
+  }
+}
