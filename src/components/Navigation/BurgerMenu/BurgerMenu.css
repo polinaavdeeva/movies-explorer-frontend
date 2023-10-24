@@ -100,7 +100,7 @@
     }
   }
   
-  @media screen and (max-width: 400px) {
+  @media screen and (max-width: 3200px) {
     .header__burger-box {
       padding: 144px 10px 46px;
     }
