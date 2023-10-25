@@ -12,7 +12,11 @@ function Footer() {
         <nav>
           <ul className="footer__list">
             <li className="footer__list-item">
-              <a className="footer__link" href="https://practicum.yandex.ru/">
+              <a
+                className="footer__link"
+                href="https://practicum.yandex.ru/"
+                target="_blank"
+              >
                 Яндекс Практикум
               </a>
             </li>
@@ -20,6 +24,7 @@ function Footer() {
               <a
                 className="footer__link"
                 href="https://github.com/polinaavdeeva"
+                target="_blank"
               >
                 Github
               </a>

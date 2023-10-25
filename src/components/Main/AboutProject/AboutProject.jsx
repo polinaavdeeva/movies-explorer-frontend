@@ -9,7 +9,7 @@ function AboutProject() {
         <div className="about-project__content">
           <div className="about-project__content-item">
             <h3 className="about-project__content-title">
-              Дипломный проект проект включал 5 этапов
+              Дипломный проект включал 5 этапов
             </h3>
             <p className="about-project__content-subtitle">
               Составление плана, работу над бэкендом, вёрстку, добавление
@@ -26,16 +26,16 @@ function AboutProject() {
             </p>
           </div>
         </div>
-        <div className="about-project__development-container">
-          <div className="about-project__development-item">
+        <ul className="about-project__development-container">
+          <li className="about-project__development-item">
             <div className="about-project__development-backend">1 неделя</div>
             <p className="about-project__development-type">Back-end</p>
-          </div>
-          <div className="about-project__development-item">
+          </li>
+          <li className="about-project__development-item">
             <div className="about-project__development-frontend">4 недели</div>
             <p className="about-project__development-type">Front-end</p>
-          </div>
-        </div>
+          </li>
+        </ul>
       </div>
     </section>
   );

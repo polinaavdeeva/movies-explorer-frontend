@@ -101,6 +101,10 @@
   .movies-card__text-container{
     max-width: 339px;
   }
+
+  .movies-card__text-container {
+    padding: 25px 0 0;
+  }
 }
 
 @media screen and (max-width: 320px) {

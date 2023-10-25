@@ -1,9 +1,10 @@
 import React from "react";
 import "./Profile.css";
+import { Link } from "react-router-dom";
 
-function Profile({logout}) {
+function Profile({ logout }) {
   return (
-    <>
+    <main>
       <section className="profile">
         <h1 className="profile__greeting">Привет, Полина!</h1>
         <form className="profile__form" onSubmit={logout}>
@@ -14,6 +15,8 @@ function Profile({logout}) {
               type="text"
               name="name"
               placeholder="Имя"
+              minLength="2"
+              maxLength="30"
               required
             ></input>
           </label>
@@ -33,13 +36,15 @@ function Profile({logout}) {
             <button className="profile__edit-button" type="button">
               Редактировать
             </button>
-            <button className="profile__exit-button" type="submit">
-              Выйти из аккаунта
-            </button>
+            <Link to="/" className="profile__exit-link">
+              <button className="profile__exit-button" type="submit">
+                Выйти из аккаунта
+              </button>
+            </Link>
           </div>
         </form>
       </section>
-    </>
+    </main>
   );
 }
 

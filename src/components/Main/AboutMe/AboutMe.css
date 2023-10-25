@@ -2,7 +2,13 @@
   display: flex;
   flex-direction: column;
   align-items: center;
+  box-sizing: border-box;
+}
+
+.about-me__container {
+  width: 100%;
   padding: 110px 70px 101px 70px;
+  box-sizing: border-box;
 }
 
 .about-me__title {
@@ -13,6 +19,7 @@
   letter-spacing: -0.88px;
   padding-bottom: 23px;
   border-bottom: 1px solid #000;
+  margin: 0;
   margin-bottom: 66px;
 }
 
@@ -69,6 +76,10 @@
   margin: 0;
 }
 
+.about-me__inform-git:hover {
+  opacity: 0.7;
+}
+
 .about-me__inform-photo {
   width: 270px;
   height: 327px;
@@ -76,13 +87,23 @@
   border-radius: 10px;
 }
 
+@media screen and (max-width: 860px) {
+  .about-me__inform {
+    column-gap: 190px;
+  }
+}
+
 @media screen and (max-width: 768px) {
-  .about-me {
-    padding: 90px 50px;
+  .about-me__container {
+    padding: 84px 50px;
   }
 
   .about-me__inform {
     column-gap: 49px;
+  }
+
+  .about-me__inform-item {
+    max-width: 364px;
   }
 
   .about-me__inform-name {
@@ -101,7 +122,7 @@
   .about-me__inform-about {
     font-size: 12px;
     line-height: 18px;
-    margin-bottom: 87px;
+    margin-bottom: 85px;
     min-height: 108px;
   }
 
@@ -111,8 +132,8 @@
   }
 }
 
-@media screen and (max-width: 320px) {
-  .about-me {
+@media screen and (max-width: 530px) {
+  .about-me__container {
     padding: 70px 14px;
   }
 
@@ -141,6 +162,8 @@
 
   .about-me__inform-about {
     font-size: 11px;
+    font-style: normal;
+    font-weight: 400;
     line-height: 16px;
     margin-bottom: 40px;
     min-height: 112px;

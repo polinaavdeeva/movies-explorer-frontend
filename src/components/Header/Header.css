@@ -16,6 +16,10 @@
   height: 38px;
 }
 
+.header__logo:hover {
+  opacity: 0.7;
+}
+
 .header__navigation-list {
   list-style: none;
   display: flex;
@@ -41,7 +45,7 @@
 }
 
 .header__link:hover {
-  opacity: 0.8;
+  opacity: 0.7;
 }
 
 .header__signin-button {
@@ -58,6 +62,10 @@
   font-weight: 500;
   line-height: 16px;
   text-decoration: none;
+}
+
+.header__signin-button:hover {
+  opacity: 0.8;
 }
 
 @media screen and (max-width: 768px) {

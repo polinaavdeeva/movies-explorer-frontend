@@ -34,7 +34,7 @@ function App() {
     location.pathname === "/profile";
 
   return (
-    <>
+    <div className="page">
       {headerPaths && <Header login={isLoggedIn} />}
       <Routes>
         <Route path="/" element={<Main />} />
@@ -45,7 +45,7 @@ function App() {
         <Route path="/signin" element={<Login login={logIn} />} />
         <Route path="/*" element={<NotFound />} />
       </Routes>
-    </>
+    </div>
   );
 }
 

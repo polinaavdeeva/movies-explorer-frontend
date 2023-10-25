@@ -65,6 +65,10 @@
   box-sizing: border-box;
 }
 
+.register__input:focus {
+  outline: 1px solid grey;
+}
+
 .register__button {
   margin-top: 69px;
   border-radius: 3px;
@@ -80,6 +84,10 @@
   justify-content: center;
   align-items: center;
   cursor: pointer;
+}
+
+.register__button:hover {
+  opacity: 0.8;
 }
 
 .register__text {
@@ -105,13 +113,16 @@
   text-decoration: none;
 }
 
+.register__link:hover {
+  opacity: 0.7;
+}
+
 @media screen and (max-width: 768px) {
   .register {
     margin-top: 232px;
     margin-bottom: 232px;
   }
 }
-
 
 @media screen and (max-width: 320px) {
   .register {

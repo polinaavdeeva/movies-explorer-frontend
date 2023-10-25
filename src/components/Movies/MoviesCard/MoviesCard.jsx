@@ -18,7 +18,7 @@ function MoviesCard({ movie }) {
         <img
           className="movies-card__image"
           src={movie.thumbnail}
-          alt="Постер к фильму"
+          alt={`Постер к фильму ${movie.nameRU}`}
         />
         <button
           className={`movies-card__button-img 
