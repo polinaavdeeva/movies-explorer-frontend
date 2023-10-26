@@ -87,13 +87,9 @@
   border-radius: 10px;
 }
 
-@media screen and (max-width: 860px) {
-  .about-me__inform {
-    column-gap: 190px;
-  }
-}
 
-@media screen and (max-width: 768px) {
+
+@media screen and (max-width: 865px) {
   .about-me__container {
     padding: 84px 50px;
   }
@@ -132,7 +128,7 @@
   }
 }
 
-@media screen and (max-width: 530px) {
+@media screen and (max-width: 540px) {
   .about-me__container {
     padding: 70px 14px;
   }

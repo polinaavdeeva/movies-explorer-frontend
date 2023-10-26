@@ -7,7 +7,7 @@ function Profile({ logout }) {
     <main>
       <section className="profile">
         <h1 className="profile__greeting">Привет, Полина!</h1>
-        <form className="profile__form" onSubmit={logout}>
+        <form className="profile__form" >
           <label className="profile__container">
             <p className="profile__container-title">Имя</p>
             <input
@@ -37,7 +37,7 @@ function Profile({ logout }) {
               Редактировать
             </button>
             <Link to="/" className="profile__exit-link">
-              <button className="profile__exit-button" type="submit">
+              <button className="profile__exit-button" type="submit" onClick={logout}>
                 Выйти из аккаунта
               </button>
             </Link>

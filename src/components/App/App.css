@@ -1,9 +1,17 @@
+html {
+  font-family: "Inter", Arial, sans-serif;
+  scroll-behavior: smooth;
+}
+
 .page {
   max-width: 1280px;
   min-height: 100vh;
-  margin: 0 auto;
   padding: 0;
-  font-family: "Inter", "Arial", sans-serif;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  box-sizing: border-box;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   -webkit-text-size-adjust: 100%;

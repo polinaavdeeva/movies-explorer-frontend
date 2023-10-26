@@ -8,13 +8,13 @@ function Navigation() {
   const location = useLocation();
 
   return (
-    <>
-      <section className="navigation">
-        <ul className="navigation__list">
+    <li>
+      <section className="header__navigation-item">
+        <ul className="header__nav-list">
           <li>
             <Link
-              className={`navigation__link ${
-                location.pathname === "/movies" ? "navigation__active-link" : ""
+              className={`header__nav-link ${
+                location.pathname === "/movies" ? "header__nav-active-link" : ""
               }`}
               to="/movies"
             >
@@ -23,9 +23,9 @@ function Navigation() {
           </li>
           <li>
             <Link
-              className={`navigation__link ${
+              className={`header__nav-link ${
                 location.pathname === "/saved-movies"
-                  ? "navigation__active-link"
+                  ? "header__nav-active-link"
                   : ""
               }`}
               to="/saved-movies"
@@ -37,8 +37,8 @@ function Navigation() {
             <Link
               className={
                 location.pathname === "/"
-                  ? "navigation__acc-button"
-                  : "navigation__acc-button_white"
+                  ? "header__nav-button"
+                  : "header__nav-button-white"
               }
               to="/profile"
             >
@@ -48,7 +48,7 @@ function Navigation() {
         </ul>
       </section>
       <BurgerMenu />
-    </>
+    </li>
   );
 }
 

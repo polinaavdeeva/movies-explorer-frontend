@@ -1,4 +1,4 @@
-.navigation {
+.header__navigation-item {
   font-size: 14px;
   font-style: normal;
   font-weight: 400;
@@ -7,7 +7,7 @@
   text-decoration: none;
 }
 
-.navigation__list {
+.header__nav-list {
   list-style: none;
   display: flex;
   justify-content: center;
@@ -16,7 +16,7 @@
   margin: 0;
 }
 
-.navigation__link {
+.header__nav-link {
   font-size: 14px;
   font-style: normal;
   font-weight: 400;
@@ -26,16 +26,16 @@
   margin-right: 20px;
 }
 
-.navigation__active-link {
+.header__nav-active-link {
   font-weight: 500;
   text-decoration: underline;
 }
 
-.navigation__link:hover {
+.header__nav-link:hover {
   opacity: 0.7;
 }
 
-.navigation__acc-button {
+.header__nav-button {
   color: transparent;
   display: block;
   margin-left: 30px;
@@ -46,7 +46,7 @@
   padding: 0;
 }
 
-.navigation__acc-button_white {
+.header__nav-button-white {
   color: transparent;
   display: block;
   margin-left: 30px;
@@ -57,32 +57,16 @@
   padding: 0;
 }
 
-.navigation__acc-button_white:hover {
+.header__nav-button-white:hover {
   opacity: 0.8;
 }
 
-.navigation__acc-button:hover {
+.header__nav-button:hover {
   opacity: 0.8;
-}
-
-.navigation__signin-button {
-  width: 76px;
-  height: 32px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  background-color: black;
-  color: white;
-  border-radius: 3px;
-  font-size: 12px;
-  font-style: normal;
-  font-weight: 500;
-  line-height: 16px;
-  text-decoration: none;
 }
 
 @media screen and (max-width: 768px) {
-  .navigation {
+  .header__navigation-item {
     display: none;
   }
 }

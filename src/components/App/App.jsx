@@ -1,6 +1,6 @@
 import React from "react";
 import { useState } from "react";
-import { Routes, Route, Navigate, useNavigate } from "react-router-dom";
+import { Routes, Route} from "react-router-dom";
 import "./App.css";
 import Main from "../Main/Main";
 import Movies from "../Movies/Movies";
@@ -10,7 +10,7 @@ import Register from "../Register/Regeister";
 import Login from "../Login/Login";
 import NotFound from "../NotFound/NotFound";
 import Header from "../Header/Header";
-import { Location, useLocation } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -23,7 +23,6 @@ function App() {
   };
 
   function logOut (event) {
-    event.preventDefault()
     setIsLoggedIn(false);
   };
 

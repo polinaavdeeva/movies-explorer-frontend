@@ -126,9 +126,9 @@
   }
 }
 
-@media screen and (max-width: 320px) {
+@media screen and (max-width: 400px) {
   .about-project {
-    padding: 70px 18px;
+    padding: 70px 14px;
   }
 
   .about-project__title {

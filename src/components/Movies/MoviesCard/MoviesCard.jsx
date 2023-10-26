@@ -13,7 +13,6 @@ function MoviesCard({ movie }) {
   let location = useLocation();
 
   return (
-    <section className="movies-card">
       <li className="movies-card__item">
         <img
           className="movies-card__image"
@@ -37,7 +36,6 @@ function MoviesCard({ movie }) {
           <p className="movies-card__time">1ч 17м</p>
         </div>
       </li>
-    </section>
   );
 }
 
