@@ -14,8 +14,7 @@
 }
 
 .profile__form {
-  max-width: 420px;
-  width: 100%;
+  width: 420px;
   margin-bottom: 70px;
 }
 
@@ -126,9 +125,9 @@
   }
 }
 
-@media screen and (max-width: 320px) {
+@media screen and (max-width: 450px) {
   .profile__form {
-    max-width: 260px;
+    width: 260px;
     margin-bottom: 40px;
   }
 
