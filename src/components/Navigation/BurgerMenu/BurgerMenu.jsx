@@ -17,13 +17,11 @@ function BurgerMenu() {
   return (
     <>
       {!isOpen ? (
-        <li>
-          <button
-            className="header__burger-button"
-            type="button"
-            onClick={hendleOpenMenu}
-          />
-        </li>
+        <button
+          className="header__burger-button"
+          type="button"
+          onClick={hendleOpenMenu}
+        />
       ) : (
         <>
           <div className="header__burger-page">
