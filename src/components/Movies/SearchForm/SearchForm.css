@@ -1,0 +1,117 @@
+.search-form {
+  max-width: 1140px;
+  width: 100%;
+  min-height: 72px;
+  margin: 0 auto 70px;
+  box-sizing: border-box;
+  border-radius: 9px;
+  display: flex;
+  align-items: center;
+  background-color: #fdfdfd;
+  box-shadow: 0px 3px 14px 0px rgba(0, 0, 0, 0.08);
+}
+
+.search-form__img {
+  background: url(../../../images/search-icon.svg) no-repeat;
+  width: 34px;
+  height: 34px;
+}
+
+.search-form__field {
+  position: relative;
+  display: flex;
+  align-items: center;
+  padding-left: 19px;
+  width: 100%;
+}
+
+.search-form__input {
+  width: 75.7%;
+  margin-left: 10px;
+  border: none;
+  font-feature-settings: "clig" off, "liga" off;
+  font-family: Inter;
+  font-size: 18px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 20px;
+  padding: 0;
+}
+
+.search-form__button {
+  width: 59px;
+  height: 34px;
+  background-color: black;
+  color: white;
+  border-radius: 48px;
+  text-align: center;
+  font-feature-settings: "clig" off, "liga" off;
+  font-family: Inter;
+  font-size: 11px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 18px;
+  border: none;
+  cursor: pointer;
+  margin-right: 19px;
+}
+
+.search-form__button:hover {
+  opacity: 0.8;
+}
+
+.search-form__input::placeholder {
+  color: #a0a0a0;
+  font-feature-settings: "clig" off, "liga" off;
+  font-family: Inter;
+  font-size: 18px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 20px;
+}
+
+.search-form__input:focus {
+  outline: #fdfdfd;
+  box-shadow: 0 0 2px rgb(225, 221, 221);
+}
+
+@media screen and (max-width: 768px) {
+  .search-form {
+    max-width: 708px;
+    margin-bottom: 109px;
+  }
+
+  .search-form__input {
+    width: 58%;
+  }
+}
+
+@media screen and (max-width: 500px) {
+  .search-form {
+    max-width: 300px;
+    height: 72px;
+  }
+
+  .search-form__img {
+    display: none;
+  }
+
+  .search-form__input {
+    font-size: 14px;
+    margin: 0;
+  }
+
+  .search-form__input::placeholder {
+    font-size: 14px;
+  }
+
+  .search-form__field {
+    justify-content: space-between;
+    padding-right: 19px;
+  }
+
+  .search-form__button {
+    width: 58px;
+    margin: 0;
+  }
+}

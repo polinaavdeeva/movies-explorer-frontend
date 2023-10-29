@@ -1,0 +1,52 @@
+.promo {
+    width: 100%;
+    min-height: 524px;
+    background: url("../../../images/лого_практикума.svg") no-repeat;
+    background-size: 248px;
+    background-color: #F3C1F8;
+    background-position: center;
+    display: flex;
+    justify-content: center;
+}
+
+.promo__title {
+    margin-top: 184px;
+    margin-bottom: 224px;
+    text-align: center;
+    max-width: 730px;
+    font-weight: 400;
+    font-size: 50px;
+    line-height: 58px;
+    letter-spacing: -4%;
+}
+
+@media screen and (max-width: 768px) {
+    .promo {
+        min-height: 784px;
+        background-size: 320px;
+    }
+
+    .promo__title {
+        margin-top: 326px;
+        margin-bottom: 342px;
+        letter-spacing: -2px;
+    }
+}
+
+@media screen and (max-width: 400px) {
+    .promo {
+        min-height: 570px;
+        background-size: 248px;
+    }
+
+    .promo__title {
+        max-width: 300px;
+        font-size: 31px;
+        font-style: normal;
+        font-weight: 400;
+        line-height: 39px; 
+        letter-spacing: -1.24px;
+        margin-top: 207px;
+        margin-bottom: 246px;
+    }
+}
