@@ -1,24 +1,29 @@
 import React from "react";
 import "./MoviesCardList.css";
 import MoviesCard from "../MoviesCard/MoviesCard";
-import { movies } from "../../../utils/moviesData";
-import { savedMovies } from "../../../utils/moviesData";
-import { useLocation } from 'react-router-dom';
+import Preloader from "../Preloader/Preloader";
 
-function MoviesCardList() {
-  let location = useLocation();
+function MoviesCardList({
+  movies,
+  savedMovies,
+  preloader,
+  setSavedMoviesList
+}) {
 
+  console.log(savedMovies);
   return (
     <section className="movies-cards">
       <ul className="movies-cards__list">
-        {location.pathname === "/movies"
-          ? movies.map((movie) => <MoviesCard key={movie._id} movie={movie} />)
-          : savedMovies.map((movie) => <MoviesCard key={movie._id} movie={movie} />)
-        }
+        {preloader && <Preloader />}
+        {movies.map((movie) => (
+          <MoviesCard
+            key={movie.id || movie._id}
+            savedMovies={savedMovies}
+            setSavedMoviesList={setSavedMoviesList}
+            movie={movie}
+          />
+        ))}
       </ul>
-      <button type="button" className="movies-cards__more">
-        Ещё
-      </button>
     </section>
   );
 }

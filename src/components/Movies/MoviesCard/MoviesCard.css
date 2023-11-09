@@ -38,7 +38,7 @@
   cursor: pointer;
 }
 
-.movies-card:hover .movies-card__button-save {
+.movies-card__item:hover .movies-card__button-save {
   visibility: visible;
 }
 
@@ -67,7 +67,7 @@
   opacity: 0.8;
 }
 
-.movies-card:hover .movies-card__button-delete {
+.movies-card__item:hover .movies-card__button-delete {
   visibility: visible;
 }
 
