@@ -7,7 +7,7 @@ class MoviesApi {
     if (response.ok) {
       return response.json();
     } else {
-      return Promise.reject(`Ошибка: ${response.status}`);
+      return Promise.reject({status: response.status, res: response});
     }
   }
 

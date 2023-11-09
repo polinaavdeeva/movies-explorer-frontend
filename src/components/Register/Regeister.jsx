@@ -1,103 +1,46 @@
-import React from "react";
+import React, { useEffect } from "react";
 import "./Register.css";
 import { Link } from "react-router-dom";
 import Logo from "../../images/логотип.svg";
 import { auth } from "../../utils/Auth";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
-import { emailPattern, namePattern } from "../../utils/constants";
+import { EMAIL_PATTERN } from "../../utils/constants";
+import useFormAndValidation from "../../hooks/useFormAndValidation";
 
-function Register({ setIsLoggedIn }) {
-  const [statusMessage, setStatusMessage] = useState(false);
-  const [nameError, setNameError] = useState("");
-  const [emailError, setEmailError] = useState("");
-  const [passwordError, setPasswordError] = useState("");
-  const isButtonDisabled = passwordError || nameError || emailError;
+function Register({setIsLoggedIn}) {
+  const {values, handleChange, errors, isValid, setIsValid} = useFormAndValidation();
+  const [statusMessage, setStatusMessage] = useState("");
 
   const navigate = useNavigate();
 
+  useEffect(() => setStatusMessage(""), [values])
+
   function handleFormSubmit(e) {
     e.preventDefault();
-    const { name, email, password } = e.target;
+    setIsValid(false);
+    const {name, email, password} = e.target;
 
     auth
       .register(name.value, email.value, password.value)
       .then(() => {
-        auth.authorize(email.value, password.value).then((data) => {
-          setIsLoggedIn();
-          navigate("/movies");
-          localStorage.setItem("token", data.token);
+        auth.authorize(email.value, password.value).then(({token}) => {
+          localStorage.setItem("jwt", token);
+          setIsLoggedIn(true);
+          navigate("/movies", {replace: true});
         });
       })
       .catch((error) => {
-        if (error.status === 409) {
+        console.log(error);
+        if (error.status === 401) {
+          setStatusMessage("Вы ввели неправильный логин или пароль.");
+        } else if (error.status === 409) {
           setStatusMessage("Пользователь с таким email уже существует");
         } else {
-          console.log(error);
-          setStatusMessage(
-            "При регистрации пользователя произошла ошибка.Попробуйте ещё раз!"
-          );
+          setStatusMessage("При регистрации пользователя произошла ошибка.");
         }
       });
   }
-
-  const validateName = (value) => {
-    switch (true) {
-      case value.length === 0:
-        return "Пожалуйста, введите имя";
-      case value.length < 2:
-        return "Слово должно содержать не менее 2 букв";
-      case value.length > 30:
-        return "Слово должно содержать не более 30 символов";
-      case !namePattern.test(value):
-        return "Слово должно содержать только буквы, пробелы, дефисы";
-      default:
-        return "";
-    }
-  };
-
-  const handleChangeName = (e) => {
-    const value = e.target.value;
-
-    const errorMessage = validateName(value);
-    setNameError(errorMessage);
-  };
-
-  const validateEmail = (value) => {
-    switch (true) {
-      case value.length === 0:
-        return "Пожалуйста, введите адрес электронной почты";
-      case !emailPattern.test(value):
-        return "Пожалуйста, введите корректный адрес электронной почты";
-      default:
-        return "";
-    }
-  };
-
-  const handleChangeEmail = (e) => {
-    const value = e.target.value;
-
-    const errorMessage = validateEmail(value);
-    setEmailError(errorMessage);
-  };
-
-  const validatePassowrd = (value) => {
-    switch (true) {
-      case value.length === 0:
-        return "Пожалуйста, введите пароль";
-      case value.length < 6:
-        return "Пароль должен быть больше 6 символов";
-      default:
-        return "";
-    }
-  };
-
-  const handleChangePassword = (e) => {
-    const value = e.target.value;
-
-    const errorMessage = validatePassowrd(value);
-    setPasswordError(errorMessage);
-  };
 
   return (
     <main className="register">
@@ -113,14 +56,15 @@ function Register({ setIsLoggedIn }) {
               name="name"
               type="text"
               placeholder="Имя"
-              onChange={handleChangeName}
+              minLength="2"
+              onChange={handleChange}
+              value={values["name"] || ""}
+              required
               className={`register__input ${
-                nameError ? "register__input_error" : ""
+                errors["name"] ? "register__input_error" : ""
               }`}
             />
-            {nameError && (
-              <span className="register__error-message">{nameError}</span>
-            )}
+            {errors["name"] && <span className="register__error-message">{errors["name"]}</span>}
           </label>
           <label className="register__label">
             E-mail
@@ -128,14 +72,15 @@ function Register({ setIsLoggedIn }) {
               name="email"
               type="email"
               placeholder="E-mail"
-              onChange={handleChangeEmail}
+              onChange={handleChange}
+              value={values["email"] || ""}
+              required
+              pattern={EMAIL_PATTERN.source}
               className={`register__input ${
-                emailError ? "register__input_error" : ""
+                errors["email"] ? "register__input_error" : ""
               }`}
             />
-            {emailError && (
-              <span className="register__error-message">{emailError}</span>
-            )}
+            {errors["email"] && <span className="register__error-message">{errors["email"]}</span>}
           </label>
           <label className="register__label">
             Пароль
@@ -143,22 +88,23 @@ function Register({ setIsLoggedIn }) {
               name="password"
               type="password"
               placeholder="Пароль"
-              onChange={handleChangePassword}
+              minLength="8"
+              onChange={handleChange}
+              value={values["password"] || ""}
+              required
               className={`register__input ${
-                passwordError ? "register__input_error" : ""
+                errors["password"] ? "register__input_error" : ""
               }`}
             />
-            {passwordError && (
-              <span className="register__error-message">{passwordError}</span>
-            )}
+            {errors["password"] && <span className="register__error-message">{errors["password"]}</span>}
           </label>
           <span className="register__error">{statusMessage}</span>
           <button
             className={`register__button ${
-              isButtonDisabled ? "register__button_disabled" : ""
+              !isValid ? "register__button_disabled" : ""
             }`}
             type="submit"
-            disabled={isButtonDisabled}
+            disabled={!isValid}
           >
             Зарегистрироваться
           </button>

@@ -7,7 +7,7 @@ class Auth {
     if (response.ok) {
       return response.json();
     } else {
-      return Promise.reject(`Ошибка: ${response.status}`);
+      return Promise.reject({status: response.status, res: response});
     }
   }
 
@@ -39,18 +39,8 @@ class Auth {
       }),
     }).then(this._checkResponse);
   }
-
-  checkToken(token) {
-    return fetch(`${this._baseUrl}/users/me`, {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${token}`,
-      },
-    }).then(this._checkResponse);
-  }
 }
 
 export const auth = new Auth({
-  baseUrl: "http://api.movies-explorer-api.nomoredomainsrocks.ru",
+  baseUrl: "https://api.movies-explorer-api.nomoredomainsrocks.ru",
 });

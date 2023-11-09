@@ -11,7 +11,7 @@ function FilterCheckbox({ onFilter, checkboxStatus }) {
         onChange={onFilter}
         checked={checkboxStatus}
       />
-      <label className="filter-checkbox__label" for="switcher"></label>
+      <label className="filter-checkbox__label" htmlFor="switcher"></label>
       <p className="filter-checkbox__name">Короткометражки</p>
     </div>
   );

@@ -13,17 +13,15 @@ import Header from "../Header/Header";
 import { useLocation } from "react-router-dom";
 import ProtectedRouteElement from "../ProtectedRouteElement/ProtectedRouteElement";
 import { CurrentUserContext } from "../../contexts/CurrectUserContext";
-import { auth } from "../../utils/Auth";
-import { useNavigate } from "react-router-dom";
 import { mainApi } from "../../utils/MainApi";
+import { HEADER_PATH_LIST } from "../../utils/constants";
 
 function App() {
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [isLoggedIn, setIsLoggedIn] = useState(!!localStorage.getItem("jwt"));
   const [currentUser, setCurrentUser] = useState({});
   const [isSuccessMessage, setIsSuccessMessage] = useState("");
-  const [savedMoviesList, setSavedMoviesList] = React.useState([]);
+  const [savedMoviesList, setSavedMoviesList] = useState([]);
 
-  const navigate = useNavigate();
   const location = useLocation();
 
   useEffect(() => {
@@ -39,47 +37,12 @@ function App() {
     }
   }, [isLoggedIn]);
 
-  function logIn() {
-    setIsLoggedIn(true);
-  }
-
-  useEffect(() => {
-
-  })
-
-  useEffect(() => {
-    const handleTokenCheck = () => {
-      if (localStorage.getItem("token")) {
-        const jwt = localStorage.getItem("token");
-        auth
-          .checkToken(jwt)
-          .then((data) => {
-            if (!data) {
-              return;
-            }
-            setIsLoggedIn(true);
-            navigate("/", { replace: true });
-          })
-          .catch(() => {
-            setIsLoggedIn(false);
-          });
-      }
-    };
-    handleTokenCheck();
-  }, []);
-
-  const headerPaths =
-    location.pathname === "/" ||
-    location.pathname === "/movies" ||
-    location.pathname === "/saved-movies" ||
-    location.pathname === "/profile";
-
   return (
     <div className="page">
       <CurrentUserContext.Provider value={currentUser}>
-        {headerPaths && <Header login={isLoggedIn} />}
+        {HEADER_PATH_LIST.includes(location.pathname) && <Header login={isLoggedIn} />}
         <Routes>
-          <Route path="/" element={<Main loggedIn={isLoggedIn} />} />
+          <Route path="/" element={<Main />} />
           <Route
             path="/movies"
             element={
@@ -110,27 +73,30 @@ function App() {
                 loggedIn={isLoggedIn}
                 setLoggedIn={setIsLoggedIn}
                 setCurrentUser={setCurrentUser}
+                setSavedMoviesList={setSavedMoviesList}
               />
             }
           />
           <Route
             path="/signup"
             element={
-              <Register
+              <ProtectedRouteElement
+                element={Register}
+                loggedIn={isLoggedIn}
                 setIsSuccessMessage={setIsSuccessMessage}
                 isSuccessMessage={isSuccessMessage}
-                setIsLoggedIn={logIn}
-              />
-            }
+                setIsLoggedIn={setIsLoggedIn}
+              />}
           />
           <Route
             path="/signin"
-            element={
-              <Login
-                setIsSuccessMessage={setIsSuccessMessage}
-                isSuccessMessage={isSuccessMessage}
-                setIsLoggedIn={logIn}
-              />
+            element={<ProtectedRouteElement
+              element={Login}
+              loggedIn={isLoggedIn}
+              setIsSuccessMessage={setIsSuccessMessage}
+              isSuccessMessage={isSuccessMessage}
+              setIsLoggedIn={setIsLoggedIn}
+            />
             }
           />
           <Route path="/*" element={<NotFound />} />

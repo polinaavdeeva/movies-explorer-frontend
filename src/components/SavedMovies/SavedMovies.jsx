@@ -1,7 +1,7 @@
 import React from "react";
-import SearchForm from "../Movies/SearchForm/SearchForm";
+import SearchForm from "../SearchForm/SearchForm";
 import "../Movies/Movies.css";
-import MoviesCardList from "../Movies/MoviesCardList/MoviesCardList";
+import MoviesCardList from "../MoviesCardList/MoviesCardList";
 import Footer from "../Footer/Footer";
 import { useState } from "react";
 import { useEffect } from "react";

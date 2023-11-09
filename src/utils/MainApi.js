@@ -8,11 +8,11 @@ class MainApi {
       return response.json();
     }
 
-    return Promise.reject(`Ошибка: ${response.status}`);
+    return Promise.reject({status: response.status, res: response});
   }
 
   getUserInfo() {
-    const token = localStorage.getItem("token");
+    const token = localStorage.getItem("jwt");
     return fetch(`${this._baseUrl}/users/me`, {
       headers: {
         "Content-Type": "application/json",
@@ -22,7 +22,7 @@ class MainApi {
   }
 
   editUserInfo(data) {
-    const token = localStorage.getItem("token");
+    const token = localStorage.getItem("jwt");
     return fetch(`${this._baseUrl}/users/me`, {
       method: "PATCH",
       headers: {
@@ -37,7 +37,7 @@ class MainApi {
   }
 
   getMovies() {
-    const token = localStorage.getItem("token");
+    const token = localStorage.getItem("jwt");
     return fetch(`${this._baseUrl}/movies`, {
       headers: {
         "Content-Type": "application/json",
@@ -47,7 +47,7 @@ class MainApi {
   }
 
   saveMovie(movie) {
-    const token = localStorage.getItem("token");
+    const token = localStorage.getItem("jwt");
     return fetch(`${this._baseUrl}/movies`, {
       method: "POST",
       headers: {
@@ -72,7 +72,7 @@ class MainApi {
   }
 
   deleteMovie(id) {
-    const token = localStorage.getItem("token");
+    const token = localStorage.getItem("jwt");
     return fetch(`${this._baseUrl}/movies/${id}`, {
       method: "DELETE",
       headers: {

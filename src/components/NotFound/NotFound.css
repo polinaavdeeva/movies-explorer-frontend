@@ -39,10 +39,13 @@
   line-height: normal;
   color: black;
   text-decoration: none;
+  border: none;
+  background-color: transparent;
 }
 
 .not-found__return-link:hover {
-  opacity: 0.7;
+  opacity: 0.8;
+  cursor: pointer;
 }
 
 @media screen and (max-width: 768px) {
@@ -58,21 +61,21 @@
         margin-top: 329px;
         margin-bottom: 30px;
       }
-      
+
       .not-found__error-container {
         row-gap: 10px;
       }
-      
+
       .not-found__title {
         font-size: 80px;
       }
-      
+
       .not-found__error-text {
         font-size: 12px;
       }
-      
+
       .not-found__return-link {
         font-size: 12px;
       }
-      
+
 }

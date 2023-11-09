@@ -2,8 +2,8 @@ import React from "react";
 import "./MoviesCard.css";
 import { useLocation } from "react-router-dom";
 import { useState, useEffect } from "react";
-import { getTimes } from "../../../utils/utils";
-import { mainApi } from "../../../utils/MainApi";
+import { getTimes } from "../../utils/utils";
+import { mainApi } from "../../utils/MainApi";
 
 function MoviesCard({ movie, savedMovies, setSavedMoviesList }) {
   const location = useLocation();
@@ -84,7 +84,7 @@ function MoviesCard({ movie, savedMovies, setSavedMoviesList }) {
       </a>
       {location.pathname === "/movies" ? (
         <button
-          className={`movies-card__button-img 
+          className={`movies-card__button-img
                 ${
                   isSavedMovie
                     ? `movies-card__button-saved`
@@ -95,7 +95,7 @@ function MoviesCard({ movie, savedMovies, setSavedMoviesList }) {
         ></button>
       ) : (
         <button
-          className={`movies-card__button-img 
+          className={`movies-card__button-img
                 movies-card__button-delete
                 }`}
           type="button"

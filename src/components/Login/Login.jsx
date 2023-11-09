@@ -1,73 +1,42 @@
-import React from "react";
+import React, { useEffect } from "react";
 import "./Login.css";
 import { Link, useNavigate } from "react-router-dom";
 import Logo from "../../images/логотип.svg";
 import { auth } from "../../utils/Auth";
-import { emailPattern,namePattern } from "../../utils/constants";
+import { EMAIL_PATTERN } from "../../utils/constants";
 import { useState } from "react";
+import useFormAndValidation from "../../hooks/useFormAndValidation";
 
-function Login({ setIsLoggedIn }) {
-  const [statusMessage, setStatusMessage] = useState(false);
-  const [emailError, setEmailError] = useState("");
-  const [passwordError, setPasswordError] = useState("");
-  const isButtonDisabled = passwordError || emailError;
+function Login({setIsLoggedIn}) {
+  const {values, handleChange, errors, isValid, setIsValid} = useFormAndValidation();
+  const [statusMessage, setStatusMessage] = useState("");
 
   const navigate = useNavigate();
 
+  useEffect(() => setStatusMessage(""), [values])
+
   const handleFormSubmit = (e) => {
     e.preventDefault();
-    const { email, password } = e.target;
+    setIsValid(false);
+    const {email, password} = e.target;
 
     auth
       .authorize(email.value, password.value)
-      .then((data) => {
-        setIsLoggedIn();
-        navigate("/movies");
-        localStorage.setItem("token", data.token);
+      .then(({token}) => {
+        localStorage.setItem("jwt", token);
+        setIsLoggedIn(true);
+        navigate("/movies", {replace: true});
       })
       .catch((error) => {
+        console.log(error);
         if (error.status === 401) {
+          setStatusMessage("Вы ввели неправильный логин или пароль.");
+        } else if (error.status === 409) {
           setStatusMessage("Пользователь с таким email уже существует");
         } else {
           setStatusMessage("Произошла ошибка.Попробуйте ещё раз!");
         }
       });
-  };
-
-  const validateEmail = (value) => {
-    switch (true) {
-      case value.length === 0:
-        return "Пожалуйста, введите адрес электронной почты";
-      case !emailPattern.test(value):
-        return "Пожалуйста, введите корректный адрес электронной почты";
-      default:
-        return "";
-    }
-  };
-
-  const handleChangeEmail = (e) => {
-    const value = e.target.value;
-
-    const errorMessage = validateEmail(value);
-    setEmailError(errorMessage);
-  };
-
-  const validatePassowrd = (value) => {
-    switch (true) {
-      case value.length === 0:
-        return "Пожалуйста, введите пароль";
-      case value.length < 6:
-        return "Пароль должен быть больше 6 символов";
-      default:
-        return "";
-    }
-  };
-
-  const handleChangePassword = (e) => {
-    const value = e.target.value;
-
-    const errorMessage = validatePassowrd(value);
-    setPasswordError(errorMessage);
   };
 
   return (
@@ -84,13 +53,16 @@ function Login({ setIsLoggedIn }) {
               name="email"
               type="email"
               placeholder="E-mail"
-              onChange={handleChangeEmail}
+              onChange={handleChange}
+              value={values["email"] || ""}
+              required
+              pattern={EMAIL_PATTERN.source}
               className={`login__input ${
-                emailError ? "login__input_error" : ""
+                errors["email"] ? "login__input_error" : ""
               }`}
             />
-            {emailError && (
-              <span className="login__error-message">{emailError}</span>
+            {errors["email"] && (
+              <span className="login__error-message">{errors["email"]}</span>
             )}
           </label>
           <label className="login__label">
@@ -99,22 +71,25 @@ function Login({ setIsLoggedIn }) {
               name="password"
               type="password"
               placeholder="Пароль"
-              onChange={handleChangePassword}
+              minLength="8"
+              onChange={handleChange}
+              required
+              value={values["password"] || ""}
               className={`login__input ${
-                passwordError ? "login__input_error" : ""
+                errors["password"] ? "login__input_error" : ""
               }`}
             />
-            {passwordError && (
-              <span className="login__error-message">{passwordError}</span>
+            {errors["password"] && (
+              <span className="login__error-message">{errors["password"]}</span>
             )}
           </label>
           <span className="login__error">{statusMessage}</span>
           <button
             className={`login__button ${
-              isButtonDisabled ? "login__button_disabled" : ""
+              !isValid ? "login__button_disabled" : ""
             }`}
             type="submit"
-            disabled={isButtonDisabled}
+            disabled={!isValid}
           >
             Войти
           </button>

@@ -10,7 +10,6 @@ function MoviesCardList({
   setSavedMoviesList
 }) {
 
-  console.log(savedMovies);
   return (
     <section className="movies-cards">
       <ul className="movies-cards__list">
