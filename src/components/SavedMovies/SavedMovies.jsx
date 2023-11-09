@@ -10,7 +10,7 @@ import { filterAllMovies, filterShortMovies } from "../../utils/utils";
 function SavedMovies({ savedMovies, setSavedMoviesList }) {
   const [filteredMovies, setFilteredMovies] = useState(savedMovies);
   const [filterAll, setFilterAll] = useState(savedMovies);
-  const [shortMovies, setShortMovies] = useState(false);
+  const [shortMovies, setShortMovies] = useState(true);
   const [requestStatus, setRequestStatus] = useState(true);
   const [searchWord, setSearchWord] = useState("");
 
@@ -30,17 +30,9 @@ function SavedMovies({ savedMovies, setSavedMoviesList }) {
   };
 
   useEffect(() => {
-    setFilterAll(savedMovies)
-    setFilteredMovies(savedMovies)
-  },[savedMovies])
-
-  useEffect(() => {
-    const moviesToFilter = shortMovies
-      ? filterShortMovies(filteredMovies)
-      : filteredMovies;
-    setFilterAll(moviesToFilter);
-    //console.log(savedMovies);
-  }, [shortMovies,savedMovies, searchWord]);
+    setFilterAll(savedMovies);
+    setFilteredMovies(savedMovies);
+  }, [savedMovies]);
 
   useEffect(() => {
     setRequestStatus(filterAll.length > 0);

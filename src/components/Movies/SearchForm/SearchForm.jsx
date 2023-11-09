@@ -46,7 +46,7 @@ function SearchForm({ searchMovies, onFilter, checkboxStatus }) {
           type="text"
           className="search-form__input"
           onChange={handleChange}
-          value={searchQuery}
+          value={searchQuery || ""}
           placeholder="Фильм"
           required
         />
