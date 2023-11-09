@@ -18,27 +18,6 @@
   flex-wrap: wrap;
 }
 
-.movies-cards__more {
-  border-radius: 6px;
-  border: none;
-  background: #f9f9f9;
-  margin-top: 79px;
-  width: 320px;
-  height: 36px;
-  font-size: 12px;
-  font-style: normal;
-  font-weight: 500;
-  line-height: normal;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  cursor: pointer;
-}
-
-.movies-cards__more:hover {
-  opacity: 0.8;
-}
-
 @media screen and (max-width: 890px) {
   .movies-cards {
     max-width: 708px;
