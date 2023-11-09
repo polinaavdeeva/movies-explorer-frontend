@@ -16,7 +16,7 @@
   position: absolute;
   right: 14px;
   top: 14px;
-  background: url("../../images/save.svg") no-repeat;
+  background: url("../../../images/save.svg") no-repeat;
   object-fit: cover;
   border: none;
   width: 72px;
@@ -29,7 +29,7 @@
   position: absolute;
   right: 14px;
   top: 14px;
-  background: url("../../images/saved.svg") no-repeat;
+  background: url("../../../images/saved.svg") no-repeat;
   object-fit: cover;
   border: none;
   width: 21px;
@@ -38,7 +38,7 @@
   cursor: pointer;
 }
 
-.movies-card__item:hover .movies-card__button-save {
+.movies-card:hover .movies-card__button-save {
   visibility: visible;
 }
 
@@ -47,7 +47,7 @@
   position: absolute;
   right: 14px;
   top: 14px;
-  background: url("../../images/delete.svg") no-repeat;
+  background: url("../../../images/delete.svg") no-repeat;
   object-fit: cover;
   border: none;
   width: 21px;
@@ -67,7 +67,7 @@
   opacity: 0.8;
 }
 
-.movies-card__item:hover .movies-card__button-delete {
+.movies-card:hover .movies-card__button-delete {
   visibility: visible;
 }
 
