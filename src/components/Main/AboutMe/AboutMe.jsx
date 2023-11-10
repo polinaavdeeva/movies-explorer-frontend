@@ -1,6 +1,7 @@
 import React from 'react';
 import "./AboutMe.css";
 import myPhoto from '../../../images/моё_фото.jpg';
+import { Link } from "react-router-dom";
 
 function AboutMe() {
   return (
@@ -12,7 +13,7 @@ function AboutMe() {
                 <h3 className='about-me__inform-name'>Полина</h3>
                 <p className='about-me__inform-status'>Фронтенд-разработчица, 20 лет</p>
                 <p className='about-me__inform-about'>Я родилась и живу в Воронеже, учусь на 3 курсе факультета компьютерных наук в ВГУ.</p>
-                <a className='about-me__inform-git' href='https://github.com/polinaavdeeva' target='_blank'>Github</a>
+                <Link className='about-me__inform-git' to='https://github.com/polinaavdeeva' target='_blank'>Github</Link>
             </div>
             <div className='about-me__inform-item'>
                 <img className='about-me__inform-photo' src={myPhoto} alt='Фоторафия разработчика'/>

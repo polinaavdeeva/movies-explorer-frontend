@@ -1,5 +1,6 @@
 import React from "react";
 import "./Footer.css";
+import { Link } from "react-router-dom";
 
 function Footer() {
   return (
@@ -12,22 +13,22 @@ function Footer() {
         <nav>
           <ul className="footer__list">
             <li className="footer__list-item">
-              <a
+              <Link
                 className="footer__link"
-                href="https://practicum.yandex.ru/"
+                to="https://practicum.yandex.ru/"
                 target="_blank"
               >
                 Яндекс Практикум
-              </a>
+              </Link>
             </li>
             <li className="footer__list-item">
-              <a
+              <Link
                 className="footer__link"
-                href="https://github.com/polinaavdeeva"
+                to="https://github.com/polinaavdeeva"
                 target="_blank"
               >
                 Github
-              </a>
+              </Link>
             </li>
           </ul>
         </nav>
