@@ -4,59 +4,66 @@ import FilterCheckbox from "./FilterCheckbox/FilterCheckbox";
 import { useState } from "react";
 import { useLocation } from "react-router-dom";
 import { useEffect } from "react";
+import { HAVE_TO_KEYWORD } from "../../utils/constants";
 
-function SearchForm({ searchMovies, onFilter, checkboxStatus }) {
-  const location = useLocation();
+function SearchForm({search, onSearch, isShort, onCheckbox, onChange}) {
+  const {pathname} = useLocation();
 
-  const [searchQuery, setSearchQuery] = useState(
-    location.pathname === "/movies"
-      ? localStorage.getItem("search-word") 
-      : ""
-  );
-  const [error, setError] = useState("");
+  const [isDisabled, setIsDisabled] = useState(false);
+  const [isEmptySearch, setIsEmptySearch] = useState(false);
 
-  const handleChange = (e) => {
-    setSearchQuery(e.currentTarget.value);
-    setError("")
-  };
 
   function handleSubmit(e) {
     e.preventDefault();
-
-    if (searchQuery.length === 0) {
-      setError("Нужно ввести ключевое слово");
-      return;
+    setIsDisabled(() => true);
+    if (search.trim()) {
+      onSearch(search, isShort)
+    } else {
+      setIsEmptySearch(true);
     }
+    setIsDisabled(() => false);
+  }
 
-    searchMovies(searchQuery);
+  function handleCheckbox(e) {
+    setIsDisabled(() => true);
+    if (pathname === "/saved-movies") {
+      onCheckbox(e);
+    }
+    if (pathname === "/movies") {
+      if (search.trim()) {
+        onCheckbox(e)
+      } else {
+        setIsEmptySearch(true);
+      }
+    }
+    setIsDisabled(() => false);
   }
 
   useEffect(() => {
-    if (location.pathname === "/movies") {
-      const storedSearchTerm = localStorage.getItem("search-word");
-      setSearchQuery(storedSearchTerm || "");
-    }
-  }, [location.pathname]);
+    setIsEmptySearch(false)
+  }, [search]);
 
   return (
     <section className="search-form">
       <form className="search-form__field" onSubmit={handleSubmit} noValidate>
-        <span className="search-form__img"></span>
+        <span className="search-form__img"/>
         <input
+          name="search"
           type="text"
           className="search-form__input"
-          onChange={handleChange}
-          value={searchQuery || ""}
+          onChange={onChange}
+          value={search || ""}
           placeholder="Фильм"
           required
+          disabled={isDisabled}
         />
         <button className="search-form__button" type="submit">
           Найти
         </button>
-        <FilterCheckbox onFilter={onFilter} checkboxStatus={checkboxStatus} />
+        <FilterCheckbox onChange={handleCheckbox} isShort={isShort} disabled={isDisabled}/>
       </form>
-      {error && (
-        <span className="search-form__error">{error}</span>
+      {isEmptySearch && (
+        <span className="search-form__error">{HAVE_TO_KEYWORD}</span>
       )}
     </section>
   );

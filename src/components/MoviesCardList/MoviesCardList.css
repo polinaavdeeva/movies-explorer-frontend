@@ -1,7 +1,7 @@
 .movies-cards {
   padding: 80px 0px;
   border-top: 1px solid #e8e8e8;
-  max-width: 1140px;
+  width: 100%;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -9,13 +9,15 @@
 }
 
 .movies-cards__list {
+  width: 100%;
   list-style: none;
   padding: 0;
   margin: 0;
   display: flex;
   flex-direction: row;
-  gap: 59px 30px;
+  gap: 37px 24px;
   flex-wrap: wrap;
+  justify-content: center;
 }
 
 @media screen and (max-width: 890px) {
@@ -24,7 +26,7 @@
   }
 
   .movies-cards__list {
-    row-gap: 47px;
+    gap: 30px;
   }
 }
 

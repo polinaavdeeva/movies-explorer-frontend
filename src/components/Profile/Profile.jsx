@@ -116,7 +116,7 @@ function Profile({setCurrentUser, setLoggedIn, setSavedMoviesList}) {
                 type="submit"
                 disabled={!isValid}
               >
-                Зарегистрироваться
+                Сохранить
               </button>
               :
               <>

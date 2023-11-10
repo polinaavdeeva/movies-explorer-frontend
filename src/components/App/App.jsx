@@ -21,6 +21,7 @@ function App() {
   const [currentUser, setCurrentUser] = useState({});
   const [isSuccessMessage, setIsSuccessMessage] = useState("");
   const [savedMoviesList, setSavedMoviesList] = useState([]);
+  const [sourceMovies, setSourceMovies] = useState([]);
 
   const location = useLocation();
 
@@ -51,6 +52,8 @@ function App() {
                 loggedIn={isLoggedIn}
                 savedMovies={savedMoviesList}
                 setSavedMoviesList={setSavedMoviesList}
+                sourceMovies={sourceMovies}
+                setSourceMovies={setSourceMovies}
               />
             }
           />
@@ -62,6 +65,8 @@ function App() {
                 loggedIn={isLoggedIn}
                 setSavedMoviesList={setSavedMoviesList}
                 savedMovies={savedMoviesList}
+                sourceMovies={sourceMovies}
+                setSourceMovies={setSourceMovies}
               />
             }
           />

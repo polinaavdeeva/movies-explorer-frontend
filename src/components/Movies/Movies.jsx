@@ -1,173 +1,164 @@
-import React from "react";
+import React, { useLayoutEffect } from "react";
 import SearchForm from "../SearchForm/SearchForm";
 import "./Movies.css";
 import MoviesCardList from "../MoviesCardList/MoviesCardList";
 import Footer from "../Footer/Footer";
 import { useState } from "react";
 import { useEffect } from "react";
-import { filterAllMovies, filterShortMovies } from "../../utils/utils";
-import { moviesApi } from "../../utils/MoviesApi";
+import { fetchAndUpdateMovies, filterAllMovies, updateLocalStorage } from "../../utils/utils";
+import {
+  CARD_LAPTOP,
+  CARD_LAPTOP_MORE,
+  CARD_TABLET, CHECKBOX,
+  COUNT_MOBILE,
+  COUNT_MOVIES_MOBILE_MORE,
+  COUNT_MOVIES_TABLET_MORE,
+  LAPTOP_RESOLUTION, MOVIES,
+  NETWORK_ERROR, SEARCH,
+  TABLET_RESOLUTION
+} from "../../utils/constants";
+import Preloader from "../Preloader/Preloader";
+import useSearchForm from "../../hooks/useSearchForm";
+import { mainApi } from "../../utils/MainApi";
 
-function Movies({ savedMovies, setSavedMoviesList }) {
+function Movies({savedMovies, setSavedMoviesList, sourceMovies, setSourceMovies}) {
   const [count, setCount] = useState(0);
   const [filteredMovies, setFilteredMovies] = useState([]);
-  const [filterAll, setFilterAll] = useState([]);
-  const [checkboxFlag, setCheckboxFlag] = useState(false);
   const [preloader, setPreloader] = useState(false);
-  const [requestStatus, setRequestStatus] = useState(true);
-  const [errorMessage, setErrorMessage] = React.useState("");
+  const [isMorePresent, setIsMorePresent] = useState(false);
+  const [isEmptySearch, setIsEmptySearch] = useState(false);
+  const [netErrorMsg, setNetErrorMsg] = useState(false);
+  const [windowMode, setWindowMode] = useState({init: CARD_LAPTOP, more: CARD_LAPTOP_MORE});
+  const {word, setWord, handleChange, handleShortChange, isShort, setIsShort} = useSearchForm();
 
-  function searchMovies(word) {
-    localStorage.setItem("search-word", word);
-
-    if (localStorage.getItem("movies")) {
-      const movies = JSON.parse(localStorage.getItem("movies"));
-      handleFilterMovies(movies, word);
+  const getMoviesCount = () => {
+    if (window.innerWidth <= TABLET_RESOLUTION) {
+      setWindowMode({init: COUNT_MOBILE, more: COUNT_MOVIES_MOBILE_MORE});
+    } else if (window.innerWidth > TABLET_RESOLUTION && window.innerWidth <= LAPTOP_RESOLUTION) {
+      setWindowMode({init: CARD_TABLET, more: COUNT_MOVIES_TABLET_MORE});
     } else {
-      fetchMovies(word);
+      setWindowMode({init: CARD_LAPTOP, more: CARD_LAPTOP_MORE});
     }
   }
 
-  function fetchMovies(word) {
-    setPreloader(true);
+  useLayoutEffect(() => {
+    getMoviesCount();
+    window.addEventListener('resize', getMoviesCount);
+    return () => {
+      window.removeEventListener('resize', getMoviesCount);
+    };
+  }, [])
 
-    moviesApi
-      .getMovies()
-      .then((cardsData) => {
-        localStorage.setItem("movies", JSON.stringify(cardsData));
-        handleFilterMovies(cardsData, word);
-      })
-      .catch((err) => {
-        console.log(err);
-        setErrorMessage(
-          "Во время запроса произошла ошибка. Возможно, проблема с соединением или сервер недоступен. Подождите немного и попробуйте ещё раз"
-        );
-      })
-      .finally(() => {
-        setPreloader(false);
-      });
+  function showButtonMore() {
+    const newCount = count + windowMode.more;
+    if (newCount < filteredMovies.length) {
+      setCount(newCount);
+      setIsMorePresent(true);
+    } else if (count < filteredMovies.length) {
+      setCount(newCount);
+      setIsMorePresent(false);
+    } else {
+      setIsMorePresent(false);
+    }
+  }
+
+  function searchMovies(word, short) {
+    if (sourceMovies.length === 0) {
+      fetchAndUpdateMovies(setPreloader, setNetErrorMsg, sourceMovies, savedMovies)
+        .then(data => {
+          setSourceMovies(data);
+          handleFilterMovies(data, word, short);
+        })
+        .catch(error => console.log(error));
+    } else {
+      handleFilterMovies(sourceMovies, word, short);
+    }
+  }
+
+  async function onShort(e) {
+    await handleShortChange(e);
+    await searchMovies(word, e.target.checked);
   }
 
   function handleFilterMovies(moviesList, word, short) {
-    const movies = filterAllMovies(moviesList, word);
-    movies.length === 0 ? setRequestStatus(false) : setRequestStatus(true);
+    const movies = filterAllMovies(moviesList, word, short);
+    localStorage.setItem(SEARCH, JSON.stringify(word));
+    localStorage.setItem(CHECKBOX, JSON.stringify(short));
+    localStorage.setItem(MOVIES, JSON.stringify(moviesList));
     setFilteredMovies(movies);
-    setFilterAll(short ? filterShortMovies(movies) : movies);
-    localStorage.setItem("filter-movies", JSON.stringify(movies));
-    localStorage.setItem("search-word", word);
-  }
-
-  function getShortMovies() {
-    setCheckboxFlag(!checkboxFlag);
-    if (!checkboxFlag) {
-      setFilterAll(filterShortMovies(filteredMovies));
-    } else {
-      setFilterAll(filteredMovies);
-    }
-    localStorage.setItem("checkbox", !checkboxFlag);
-  }
-
-  function getMoviesCount() {
-    if (window.innerWidth >= 768) {
-      setCount(12);
-    } else if (window.innerWidth > 630) {
-      setCount(8);
-    } else if (window.innerWidth <= 630) {
-      setCount(5);
+    setIsMorePresent(movies.length > windowMode.init);
+    if (movies.length === 0) {
+      setIsEmptySearch(true);
     }
   }
 
-  useEffect(() => {
-    getMoviesCount();
-  }, []);
-
-  useEffect(() => {
-    setTimeout(() => {
-      window.addEventListener("resize", getMoviesCount);
-    }, 300);
-  });
-
-  useEffect(() => {
-    if (localStorage.getItem("checkbox") === "true") {
-      setCheckboxFlag(true);
-    } else {
-      setCheckboxFlag(false);
-    }
-  }, []);
-
-  function showButtonMore() {
-    const display = window.innerWidth;
-    let increment = 0;
-
-    if (display > 1047) {
-      increment = 3;
-    } else if (display > 613) {
-      increment = 2;
-    } else if (display < 613) {
-      increment = 2;
-    }
-
-    setCount(count + increment);
+  function toggleActions(movie) {
+    setSourceMovies(p => p.map(data => (data.id === movie.id) ? movie : data));
+    setFilteredMovies(p => p.map(data => (data.id === movie.id) ? movie : data));
+    updateLocalStorage(movie);
   }
 
-  const moviesList = filterAll.slice(0, count);
+  function likeMovie(movie) {
+    return mainApi.saveMovie(movie)
+      .then(newSavedMovie => {
+        movie._id = newSavedMovie["_id"]
+        movie.isSaved = true;
+        toggleActions(movie);
+        setSavedMoviesList(p => [...p, newSavedMovie]);
+      })
+      .catch(error => {
+        console.log(error);
+        setNetErrorMsg(true);
+      })
+  }
+
+  function dislikeMovie(movie) {
+    return mainApi.deleteMovie(movie._id)
+      .then(() => {
+        movie.isSaved = false;
+        toggleActions(movie);
+        setSavedMoviesList(p => p.filter(data => data.movieId !== movie.id));
+      })
+      .catch(error => {
+        console.log(error);
+        setNetErrorMsg(true);
+      })
+  }
 
   useEffect(() => {
-    if (localStorage.getItem("filter-movies")) {
-      const movies = JSON.parse(localStorage.getItem("filter-movies"));
-      setFilteredMovies(movies);
-      movies.length === 0 ? setRequestStatus(false) : setRequestStatus(true);
-      if (localStorage.getItem("checkbox") === "true") {
-        setCheckboxFlag(true);
-        setFilterAll(filterShortMovies(movies));
-      } else {
-        setCheckboxFlag(false);
-        setFilterAll(movies);
-      }
-    }
-  }, []);
+    setIsEmptySearch(false);
+    setNetErrorMsg(false);
+  }, [word, isShort]);
 
   useEffect(() => {
-    if (localStorage.getItem("search-word")) {
-      if (filterAll.length === 0) {
-        setRequestStatus(false);
-      } else {
-        setRequestStatus(true);
-      }
-    } else {
-      setRequestStatus(false);
+    const movies = JSON.parse(localStorage.getItem(MOVIES));
+    const word = JSON.parse(localStorage.getItem(SEARCH));
+    const short = localStorage.getItem(CHECKBOX);
+    if (word && short && movies) {
+      setIsShort(JSON.parse(short));
+      setWord(word);
+      handleFilterMovies(movies, word, JSON.parse(short))
     }
-  }, [filterAll]);
+    setCount(windowMode.init);
+  }, [windowMode.init]);
 
   return (
     <>
       <main className="movies">
         <SearchForm
-          searchMovies={searchMovies}
-          onFilter={getShortMovies}
-          checkboxStatus={checkboxFlag}
+          onCheckbox={onShort}
+          onSearch={searchMovies}
+          onChange={handleChange}
+          search={word}
+          isShort={isShort}
         />
-        {requestStatus ? (
-          <MoviesCardList
-            preloader={preloader}
-            savedMovies={savedMovies}
-            setSavedMoviesList={setSavedMoviesList}
-            movies={moviesList}
-          />
-        ) : errorMessage ? (
-          <p className="movies__error">{errorMessage}</p>
-        ) : (
-          <p className="movies__error">Ничего не найдено!</p>
-        )}
-        {(count < filterAll.length) && (!errorMessage) && (
-          <button
-            type="button"
-            onClick={showButtonMore}
-            className="movies__more"
-          >
-            Ещё
-          </button>
-        )}
+        {preloader ? <Preloader /> :
+          filteredMovies &&
+          <MoviesCardList movies={filteredMovies.slice(0, count)} onLike={likeMovie} onDislike={dislikeMovie} />
+        }
+        {netErrorMsg && <p className="movies__error">{NETWORK_ERROR}</p>}
+        {isEmptySearch && <p className="movies__error">Ничего не найдено!</p>}
+        {isMorePresent && <button type="button" onClick={showButtonMore} className="movies__more">Ещё</button>}
       </main>
       <Footer />
     </>
